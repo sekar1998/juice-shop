@@ -19,7 +19,9 @@
                (focus)="this.error=null"
                matInput placeholder=""
                aria-label="Text field for the login email">
-        <mat-error *ngIf="emailControl.invalid" translate>MANDATORY_EMAIL</mat-error>
+        <!-- <mat-error *ngIf="emailControl.invalid" translate>MANDATORY_EMAIL</mat-error> -->
+        <mat-error *ngIf="emailControl.hasError('required')" translate>MANDATORY_EMAIL</mat-error>
+        <mat-error *ngIf="emailControl.hasError('email')" translate>INVALID_EMAIL_FORMAT</mat-error>
       </mat-form-field>
 
       <mat-form-field color="accent" appearance="outline">
@@ -38,12 +40,14 @@
                 matTooltipPosition=right>
           <i class="fas fa-eye-slash" aria-label="Eye Slash"></i>
         </button>
-        <mat-error *ngIf="passwordControl.invalid" translate>MANDATORY_PASSWORD</mat-error>
+        <!-- <mat-error *ngIf="passwordControl.invalid" translate>MANDATORY_PASSWORD</mat-error> -->
+        <mat-error *ngIf="passwordControl.hasError('required')" translate>MANDATORY_PASSWORD</mat-error>
+        <mat-error *ngIf="passwordControl.hasError('minlength')" translate>PASSWORD_TOO_SHORT</mat-error>
       </mat-form-field>
 
       <a class="primary-link forgot-pw" routerLink="/forgot-password" translate>FORGOT_PASSWORD</a>
 
-      <button type="submit" id="loginButton" [disabled]="!emailControl.value||!passwordControl.value" mat-raised-button
+      <button type="submit" id="loginButton" [disabled]="emailControl.invalid || passwordControl.invalid" mat-raised-button
               color="primary" (click)="login()" aria-label="Login">
         <mat-icon>
           exit_to_app

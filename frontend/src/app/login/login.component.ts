@@ -27,10 +27,12 @@ const oauthProviderUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
 })
 
 export class LoginComponent implements OnInit {
-  public emailControl = new UntypedFormControl('', [Validators.required])
+  // public emailControl = new UntypedFormControl('', [Validators.required])
 
-  public passwordControl = new UntypedFormControl('', [Validators.required, Validators.minLength(1)])
+  // public passwordControl = new UntypedFormControl('', [Validators.required, Validators.minLength(1)])
 
+  public emailControl = new UntypedFormControl('', [Validators.required, Validators.email]);
+  public passwordControl = new UntypedFormControl('', [Validators.required, Validators.minLength(8)]);
   public hide = true
   public user: any
   public rememberMe: UntypedFormControl = new UntypedFormControl(false)
@@ -70,6 +72,10 @@ export class LoginComponent implements OnInit {
   }
 
   login () {
+    if (this.emailControl.invalid || this.passwordControl.invalid) {
+      this.error = 'Please enter valid credentials'; // Or handle error message as required
+      return;
+    }
     this.user = {}
     this.user.email = this.emailControl.value
     this.user.password = this.passwordControl.value
