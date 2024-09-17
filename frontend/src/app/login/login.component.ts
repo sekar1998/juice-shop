@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
 
   login () {
     if (this.emailControl.invalid || this.passwordControl.invalid) {
-      this.error = 'Please enter valid credentials'; // Or handle error message as required
+      this.error = 'Please enter valid credentials'; 
       return;
     }
     this.user = {}
